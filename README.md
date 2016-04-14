@@ -30,6 +30,14 @@ curl -s https://raw.githubusercontent.com/superlumic/superlumic/master/superlumi
 
 Then "roderik.yml" will be used.
 
+If you're vid and you want to pull his versions of the superlumic and superlumic-config repos, use this:
+
+```bash
+curl https://raw.githubusercontent.com/vid-uo/superlumic/master-vid/superlumic | bash -s git@github.com:vid-uo/superlumic-config.git vid
+```
+
+Then "vid.yml" will be used 
+
 ## Out of the box result?
 
 Starting from "default.yml" this will get you:
