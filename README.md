@@ -28,7 +28,7 @@ Or if you have an adversion to piping scripts over the internet into bash, downl
 curl -s https://raw.githubusercontent.com/superlumic/superlumic/master/superlumic | bash -s <your repo clone url here> roderik
 ```
 
-Then "roderik.yml" will be used.
+Then "vid.yml" will be used.
 
 If you're vid and you want to pull his versions of the superlumic and superlumic-config repos, use this:
 
