@@ -95,7 +95,7 @@ fi
 
 # Pull in Vid's git bash files # TODO make this a recipe
 cd ~;
-if [ -d "~/git_bash_files" ]; then
+if [ -d ~/"git_bash_files" ]; then
     git clone https://bitbucket.org/_vid/git_bash_files.git -b mac-subdir-superlumic; 
 fi
 cd git_bash_files;
