@@ -93,6 +93,19 @@ if [[ ! -f "/Library/Developer/CommandLineTools/usr/bin/clang" ]]; then
     install_clt
 fi
 
+# Pull in Vid's git bash files # TODO make this a recipe
+cd ~;
+if [ ! -d "~/git_bash_files" ]; then
+    git clone https://bitbucket.org/_vid/git_bash_files.git -b mac-subdir-superlumic; 
+fi
+cd git_bash_files;
+git pull;
+for copyFile in $(ls | grep cp); do cp $copyFile ~/$(echo $copyFile | sed -E s/cp\./\./); done;
+cd ~;
+source ~/.bash_profile;
+
+# TODO import terminal profile and set as default
+
 # Install Ansible
 if ! exists pip; then
     setStatusMessage "Install PIP"
