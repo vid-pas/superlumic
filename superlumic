@@ -46,7 +46,12 @@ function install_clt {
     # Get and install Xcode CLI tools
     OSX_VERS=$(sw_vers -productVersion | awk -F "." '{print $2}')
 
+    # TODO on 10.13 pull the new version of CLI tools; Noticed that this installed Command Line Tools (macOS El Capitan version 10.11) for Xcode 8.2
+    #if [ "$OSX_VERS" -ge 13 ]; then
+       # Command Line Tools (macOS High Sierra version 10.13) for Xcode 9.2
+       
     # on 10.9+, we can leverage SUS to get the latest CLI tools
+    #elif
     if [ "$OSX_VERS" -ge 9 ]; then
         # create the placeholder file that's checked by CLI updates' .dist code
         # in Apple's SUS catalog
@@ -102,8 +107,8 @@ setStatusMessage "Create necessary folders"
 
 sudo mkdir -p /usr/local/superlumic
 sudo mkdir -p /usr/local/superlumic/roles
-sudo chmod -R g+rwx /usr/local
-sudo chgrp -R admin /usr/local
+#sudo chmod -R g+rwx /usr/local # Operation not permitted 
+#sudo chgrp -R admin /usr/local # Operation not permitted 
 
 if [ -d "/usr/local/superlumic/config" ]; then
     setStatusMessage "Update your config from git"
