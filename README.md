@@ -33,7 +33,7 @@ Then "vid.yml" will be used.
 If you're vid and you want to pull his versions of the superlumic and superlumic-config repos, use this:
 
 ```bash
-curl https://raw.githubusercontent.com/vid-uo/superlumic/master-vid/superlumic | bash -s https://github.com/vid-uo/superlumic-config.git vid
+curl https://raw.githubusercontent.com/vid-n3t/superlumic/master-vid/superlumic | bash -s https://github.com/vid-n3t/superlumic-config.git vid
 ```
 
 Then "vid.yml" will be used 
