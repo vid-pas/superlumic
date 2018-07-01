@@ -92,7 +92,7 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
 #Check for missing CLT or Available updates to CTL and install if needed
-PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n') && if [[ ! -f "/Library/Developer/CommandLineTools/usr/bin/clang" ]] || [ -n "$PROD" ]; then echo "yup"; fi
+PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n') && if [[ ! -f "/Library/Developer/CommandLineTools/usr/bin/clang" ]] || [ -n "$PROD" ]; then
     setStatusMessage "Install the CLT"
     install_clt
 fi
