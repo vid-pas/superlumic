@@ -60,6 +60,8 @@ function install_clt {
             # install it then restart if needed
             softwareupdate -iR "$PROD" --verbose; 
             rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+            # unset PROD
+            PROD="";
             PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n');
             loopnum=$((loopnum+1));
         done;
