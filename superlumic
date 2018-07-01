@@ -55,11 +55,20 @@ function install_clt {
        # in Apple's SUS catalog
        touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
        # find the CLI Tools update
-       PROD="Command\ Line\ Tools\ (macOS\ High\ Sierra\ version\ 10.13)\ for\ Xcode-9.4"
+       PROD="Command Line Tools (macOS High Sierra version 10.13) for Xcode-9.4"
        # install it
        softwareupdate -i "$PROD" --verbose
        rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-
+    #Note: 7/1/18; the update above was failing... it may be that you have to install several CommandLineTools updates in sequence. so the below grep may work best in a while loop checking for CommandLineTools updates after each install.
+    # while [ -n "$PROD" ]; 
+    # do 
+    ## create the placeholder file that's checked by CLI updates' .dist code
+    ## in Apple's SUS catalog
+    #  touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    #  softwareupdate -i "$PROD" --verbose; 
+    #  rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
+    #  PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n'); 
+    # done;
     # on 10.9+, we can leverage SUS to get the latest CLI tools
     elif [ "$OSX_VERS" -ge 9 ]; then
     #if [ "$OSX_VERS" -ge 9 ]; then
@@ -69,7 +78,7 @@ function install_clt {
         # find the CLI Tools update
         PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
         # install it
-        softwareupdate -i "$PROD" --verbose
+         softwareupdate -i "$PROD" --verbose
         rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
 
     # on 10.7/10.8, we instead download from public download URLs, which can be found in
