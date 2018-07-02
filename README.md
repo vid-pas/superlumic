@@ -44,12 +44,23 @@ Starting from "default.yml" this will get you:
 
 * All my favorite GUI apps installed via Homebrew Cask
 * All my favorite commandline apps installed via Homebrew
-* A fully operational PHP 5.5 installation with composer, optimised for running Symfony
-* A MySQL and Postgresql database
-* A configured Sublime Text 3
+* -A fully operational PHP 5.5 installation with composer, optimised for running Symfony-
+* -A MySQL and Postgresql database-
+* -A configured Sublime Text 3-
 * NodeJS and several frontend oriented tools like bower, gulp and grunt
 * A bash 4 CLI environment, with a nice prompt, and terminal theme
 * A VIM environment with Janus installed
 * A whole host of "osx default" settings including computername, dock size and position, etc
 
 and, since it's almost pure Ansible, a very easy way to adjust, tune and extend this configuration to match your needs exactly.
+
+## Installation size
+
+The 'vid' playbook currently uses 21.7GB of HD space for OSX 10.13 and the installed applications.
+
+## Next steps
+
+* Run software update `softwareupdate -l; softwareupdate -iaR; # List updates; Install all, restart if needed.
+* Install atom sync
+* Install Firefox Developer Edition
+* Sync Firefox
