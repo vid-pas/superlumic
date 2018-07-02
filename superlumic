@@ -45,33 +45,26 @@ function exists {
 function install_clt {
     # Get and install Xcode CLI tools
     OSX_VERS=$(sw_vers -productVersion | awk -F "." '{print $2}')
-
-    # TODO on 10.13 pull the new version of CLI tools; Noticed that this installed Command Line Tools (macOS El Capitan version 10.11) for Xcode 8.2
-    #if [ "$OSX_VERS" -ge 13 ]; then
-       # Command Line Tools (macOS High Sierra version 10.13) for Xcode 9.4
-       # sudo /usr/sbin/softwareupdate -i Command\ Line\ Tools\ (macOS\ High\ Sierra\ version\ 10.13)\ for\ Xcode-9.4
-       
-       # create the placeholder file that's checked by CLI updates' .dist code
-       # in Apple's SUS catalog
-       touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-       # find the CLI Tools update
-       PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
-       # install it
-       softwareupdate -i "Command\ Line\ Tools\ (macOS\ High\ Sierra\ version\ 10.13)\ for\ Xcode-9.4" --verbose
-       rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-
     # on 10.9+, we can leverage SUS to get the latest CLI tools
-    #elif
     if [ "$OSX_VERS" -ge 9 ]; then
-        # create the placeholder file that's checked by CLI updates' .dist code
-        # in Apple's SUS catalog
-        touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-        # find the CLI Tools update
-        PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n')
-        # install it
-        softwareupdate -i "$PROD" --verbose
-        rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
-
+        # query software update for available command line tools installs / updates
+        PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n'); 
+        #Note: 7/1/18; it may be that you have to install several CommandLineTools updates in sequence. Leveraging a while loop to install 'all' CommandLineTools updates
+        # loop no more than 4 times. 
+        loopnum=1;
+        while [ -n "$PROD" ] && [ "$loopnum" -lt 5 ]; 
+        do 
+            # create the placeholder file that's checked by CLI updates' .dist code
+            # in Apple's SUS catalog
+            touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+            # install it then restart if needed
+            softwareupdate -iR "$PROD" --verbose; 
+            rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+            # unset PROD
+            PROD="";
+            PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n');
+            loopnum=$((loopnum+1));
+        done;
     # on 10.7/10.8, we instead download from public download URLs, which can be found in
     # the dvtdownloadableindex:
     # https://devimages.apple.com.edgekey.net/downloads/xcode/simulators/index-3905972D-B609-49CE-8D06-51ADC78E07BC.dvtdownloadableindex
@@ -98,7 +91,9 @@ while true; do sudo -n true; sleep 60; kill -0 "$$" || exit; done 2>/dev/null &
 
 export HOMEBREW_CASK_OPTS="--appdir=/Applications"
 
-if [[ ! -f "/Library/Developer/CommandLineTools/usr/bin/clang" ]]; then
+#Check for missing CLT or Available updates to CTL and install if needed
+echo "Checking if we need to install Xcode CLI tools"
+PROD=$(softwareupdate -l | grep "\*.*Command Line" | head -n 1 | awk -F"*" '{print $2}' | sed -e 's/^ *//' | tr -d '\n') && if [[ ! -f "/Library/Developer/CommandLineTools/usr/bin/clang" ]] || [ -n "$PROD" ]; then
     setStatusMessage "Install the CLT"
     install_clt
 fi
