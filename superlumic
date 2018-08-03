@@ -139,7 +139,7 @@ else
         git clone -q $repo /usr/local/superlumic/config
     else
         setStatusMessage "Getting the default config"
-        git clone -q https://github.com/vid-uo/superlumic-config.git /usr/local/superlumic/config
+        git clone -q https://github.com/vid-n3t/superlumic-config.git /usr/local/superlumic/config
     fi
 fi
 
