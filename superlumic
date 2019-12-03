@@ -57,8 +57,9 @@ function install_clt {
             # create the placeholder file that's checked by CLI updates' .dist code
             # in Apple's SUS catalog
             touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+            softwareupdate -i "$PROD" --verbose;
             # install it then restart if needed
-            softwareupdate -iR "$PROD" --verbose; 
+            softwareupdate -iR "$PROD" --verbose;
             rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
             # unset PROD
             PROD="";
