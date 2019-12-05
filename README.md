@@ -38,6 +38,25 @@ curl https://raw.githubusercontent.com/vid-n3t/superlumic/master-vid/superlumic 
 
 Then "vid.yml" will be used 
 
+### If you want to use a custom config fork and generate a one-time custom user config; start by generating the config file:
+
+```
+echo "---
+
+- include: default.yml computername=My-New-MBP git_user_name="MyGitUserName" git_user_email="myEmail@email.com" preferred_shell=bashlatest" > username.yml
+```
+
+### Then call the superlumic script with that alternative fork (for ex.: vid-pas/superlumic-config.git) and specify the config yml file name: username
+```bash
+curl https://raw.githubusercontent.com/vid-n3t/superlumic/master-vid/superlumic | bash -s https://github.com/vid-pas/superlumic-config.git username
+```
+
+This will start the process but fail when it can't find the username yml file.
+### Add the username.yml to the config dir
+```bash
+cp username.yml /usr/local/superlumic/config/
+```
+
 ## Out of the box result?
 
 Starting from "default.yml" this will get you:
