@@ -10,9 +10,9 @@ While the Kitchenplan wrapper uses a Ruby gem and quite some code, I kept Superl
 
 Start by forking [superlumic-config](https://github.com/vid-n3t/superlumic-config). This is the default configuration "role" for Superlumic and will serve as a starting point for your own configuration.
 
-You will need at least a "default.yml" playbook. Use the roles folder to create "profiles" and add extra dependencies in the "requirements.yml" as needed.
+You will need at least a "username.yml" playbook, where you replace "username" by the username you will run Superlumic as on your mac. Use the roles folder to create "profiles" and add extra dependencies in the "requirements.yml" as needed.
 
-How you organise your config files is entirely up to you, but this is how I do it. The "profile-all" role are the apps and settings that everyone in my company needs. Then I have a group file per type of installation (developers, designers, etc). You can then create a "username.yml" playbook to add all the specific things for a specific user.
+How you organise your config files is entirely up to you, but this is how I do it. The "profile-all" role are the apps and settings that everyone in my company needs. Then I have a group file per type of installation (developers, designers, etc). In the "username.yml" playbook I then add all the specific things for that user.
 
 ## Running Superlumic
 
@@ -59,13 +59,13 @@ cp username.yml /usr/local/superlumic/config/
 
 ## Out of the box result?
 
-Starting from "default.yml" this will get you:
+Starting from "roderik.yml" this will get you:
 
 * All my favorite GUI apps installed via Homebrew Cask
 * All my favorite commandline apps installed via Homebrew
-* -A fully operational PHP 5.5 installation with composer, optimised for running Symfony-
-* -A MySQL and Postgresql database-
-* -A configured Sublime Text 3-
+* A fully operational PHP 5.5 installation with composer, optimised for running Symfony
+* A MySQL and Postgresql database
+* A configured Sublime Text 3
 * NodeJS and several frontend oriented tools like bower, gulp and grunt
 * A bash 4 CLI environment, with a nice prompt, and terminal theme
 * A VIM environment with Janus installed
