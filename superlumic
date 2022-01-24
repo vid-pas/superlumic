@@ -72,7 +72,7 @@ if [ ! -d ~/"git_bash_files" ]; then
     git clone https://bitbucket.org/_vid/git_bash_files.git -b mac-subdir-superlumic && echo '## Short pause after git clone git_bash_files.' && sleep 1
 fi
 cd git_bash_files;
-git pull && echo '## Short pause after git pull.' && sleep 5
+git pull && echo '## Short pause after git pull.' && sleep 1
 for copyFile in $(ls | grep cp); do cp $copyFile ~/$(echo $copyFile | sed -E s/cp\./\./); done;
 cd ~;
 if [ -f ~/.bash_profile ]; then
