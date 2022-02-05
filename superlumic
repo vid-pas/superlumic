@@ -68,28 +68,32 @@ fi
 
 # Pull in Vid's git bash files # TODO make this a recipe
 cd ~;
-if [ ! -d ~/"git_bash_files" ]; then
-    git clone https://bitbucket.org/_vid/git_bash_files.git -b mac-subdir-superlumic && echo '## Short pause after git clone git_bash_files.' && sleep 1
+if [ ! -d ~/"vid_bash_files" ]; then
+  if [ ! -d ~/"git_bash_files" ]; then
+      git clone https://bitbucket.org/_vid/git_bash_files.git -b mac-subdir-superlumic && echo '## Short pause after git clone git_bash_files.' && sleep 1
+  fi
+  cd git_bash_files;
+  git pull && echo '## Short pause after git pull.' && sleep 1
+  for copyFile in $(ls | grep cp); do cp $copyFile ~/$(echo $copyFile | sed -E s/cp\./\./); done;
+  cd ~;
+  if [ -f ~/.bash_profile ]; then
+    source ~/.bash_profile;
+  fi
 fi
-cd git_bash_files;
-git pull && echo '## Short pause after git pull.' && sleep 1
-for copyFile in $(ls | grep cp); do cp $copyFile ~/$(echo $copyFile | sed -E s/cp\./\./); done;
-cd ~;
-if [ -f ~/.bash_profile ]; then
-  source ~/.bash_profile;
-fi
-
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-echo '## Confirming brew install'
 which brew
 if [ $? != 0 ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
+  echo '## Confirming brew install'
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+
 # opt out of analytics
+echo '## Opting out of brew analytics'
 export HOMEBREW_NO_ANALYTICS=1
 brew analytics off
 
+echo '## Installing ansible'
 brew install ansible
 
 setStatusMessage "Create necessary folders"
